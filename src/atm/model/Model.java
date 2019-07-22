@@ -1,5 +1,5 @@
 package atm.model;
 
-public class Model {
-
+public interface Model {
+	public void notifyChanged(ModelEvent me);
 }
