@@ -5,8 +5,8 @@ public class Bank {
 	
 	//ArrayList for the users of the bank "UserAccounts" and for the different types
 	//of accounts for each of those users "BankAccounts"
-	private ArrayList<Integer> UserAccounts = new ArrayList<Integer>();
-	private ArrayList<Integer> BankAccounts = new ArrayList<Integer>();
+	private ArrayList<UserAccount> UserAccounts = new ArrayList<UserAccount>();
+	private ArrayList<BankAccount> BankAccounts = new ArrayList<BankAccount>();
 	
 	//Gets users account when signing in
 	public int getUserAccount() {
