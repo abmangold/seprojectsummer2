@@ -14,7 +14,7 @@ public class BankAccountTest {
 	BankAccount ba;
 	@Before
 	public void setUp() throws Exception {
-		ba = new BankAccount("Checking", "123456", "1111", new BigDecimal("200.00"));
+		ba = new BankAccount("Checking", "123456", "12345", "1111", new BigDecimal("200.00"));
 	}
 
 	@After
@@ -24,15 +24,13 @@ public class BankAccountTest {
 	
 	@Test
 	public void testWithdraw() throws Exception {
-		BigDecimal Ba = ba.withdraw(new BigDecimal("110.55"));
-		System.out.println("withdraw, new balance = " + Ba.toString());
+		ba.withdraw(new BigDecimal("110.55"));
 		assertEquals(ba.getBalance().toString(), "89.45");
 	}
 	
 	@Test
 	public void testDeposit() {
-		BigDecimal Ba = ba.deposit(new BigDecimal("150.00"));
-		System.out.println("deposit, new balance = " + Ba.toString());
+		ba.deposit(new BigDecimal("150.00"));
 		assertEquals(ba.getBalance().toString(), "350.00");
 	}
 	
