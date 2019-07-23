@@ -1,0 +1,34 @@
+<project name="ATM">
+	
+	<property name="atm.src.dir" location="src" />
+	<property name="atm.build.dir" location="bin" />
+	<property name="results.test.dir" location="results" />
+
+	<path id="classpath.test">
+	    <pathelement location="lib/junit.jar"/>
+	    <pathelement location="lib/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+	    <pathelement location="${atm.build.dir}"/>
+	</path>
+		
+	<target name="compile">
+	    <mkdir dir="${atm.build.dir}"/>
+	    <javac srcdir="${atm.src.dir}" destdir="${atm.build.dir}" includeantruntime="false"/>
+	</target>
+	
+	<target name="test" depends="compile">
+		<mkdir dir="${results.test.dir}"/>
+		<junit printsummary="yes" haltonfailure="yes" fork="true">
+			<classpath>
+				<path refid="classpath.test" />
+				<pathelement location="${atm.build.dir}" />
+			</classpath>
+			<formatter type="plain" />
+			<formatter type="xml" />
+			<batchtest fork="yes" todir="${results.test.dir}">
+				<fileset dir="${atm.src.dir}">
+					<include name="**/*Test*.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+</project>
