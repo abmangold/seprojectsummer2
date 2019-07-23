@@ -59,4 +59,8 @@ nb-configuration.xml
 ## OS X
 ##########################
 .DS_Store
-.classpath
+
+##########################
+## Other
+##########################
+results/
