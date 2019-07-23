@@ -58,5 +58,5 @@ public class BankAccount extends AbstractModel{
 		// Add Model Event
 		Balance = newBalance;
 		// Notify Changed
-	}
+  }
 }
