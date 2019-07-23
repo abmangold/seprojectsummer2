@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import atm.model.BankAccount;
+import atm.model.InsufficientFundsException;
 
 public class BankAccountTest {
 	BankAccount ba;
@@ -26,6 +27,17 @@ public class BankAccountTest {
 	public void testWithdraw() throws Exception {
 		ba.withdraw(new BigDecimal("110.55"));
 		assertEquals(ba.getBalance().toString(), "89.45");
+	}
+	
+	@Test
+	public void testInsufficientFunds() throws Exception {
+		try {
+			ba.withdraw(new BigDecimal("250.00"));
+			fail("Insufficient funds exception should be thrown");
+		}
+		catch(InsufficientFundsException ex) {
+			assertEquals(ex.getMessage(), "Insufficient Funds!");
+		}
 	}
 	
 	@Test

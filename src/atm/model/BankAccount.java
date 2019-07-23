@@ -46,7 +46,7 @@ public class BankAccount extends AbstractModel{
 	public void withdraw(BigDecimal amount) throws Exception {
 		BigDecimal newBalance = Balance.add(BigDecimal.ZERO);
 		newBalance = newBalance.subtract(amount);
-		if (newBalance.signum() < 0) throw new Exception("OverDraw");
+		if (newBalance.signum() < 0) throw new InsufficientFundsException();
 		// Add Model Event
 		Balance = newBalance;
 		// Notify Changed
