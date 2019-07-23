@@ -9,15 +9,21 @@ public class Bank {
 	private ArrayList<BankAccount> BankAccounts = new ArrayList<BankAccount>();
 	
 	//Gets users account when signing in
-	public int getUserAccount() {
+	public UserAccount getUserAccount(String ID) {
 		
-		return(0);
+		//This user account returned when found
+		UserAccount foundUser = new UserAccount();
+		
+		return(foundUser);
 	}
 	
 	//Gets users different accounts within the bank
-	public int getUserBankAccounts() {
+	public BankAccount getUserBankAccounts() {
 		
-		return(0);
+		//This bank account returned when found with the user
+		BankAccount foundBankAccount = new BankAccount();
+		
+		return(foundBankAccount);
 	}
 
 }
