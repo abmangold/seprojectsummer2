@@ -10,6 +10,15 @@ public class BankAccount extends AbstractModel{
 	private String ID;
 	private String PIN;
 
+	public BankAccount() {
+		this.Name = "";
+		this.Owner = "";
+		this.ID = "";
+		this.PIN = "";
+		this.Balance = BigDecimal.ZERO;	
+		this.Balance.setScale(2, RoundingMode.HALF_UP);
+}
+
 	public BankAccount(String name,
 					   String owner,
 					   String ID, 
