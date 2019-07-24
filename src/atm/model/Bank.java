@@ -21,9 +21,7 @@ public class Bank {
 	public BankAccount getUserBankAccounts(String ID) {
 		
 		//This bank account returned when found with the user
-		BankAccount foundBankAccount = new BankAccount();
-		
-		return(foundBankAccount);
+		return null;
 	}
 	
 	//Adding users to UserAccounts List
