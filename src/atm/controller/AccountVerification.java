@@ -1,8 +1,12 @@
 package atm.controller;
 
 import java.lang.*;
+import java.math.BigDecimal;
+
+import atm.model.BankAccount;
 
 public class AccountVerification {
+	BankAccount ba = new BankAccount("Checking", "123456", "12345", "1111", new BigDecimal("200.00"));
 	private String accountNo;
 	private String pin;
 	private Boolean cardLock = false; // default to not locked
@@ -23,7 +27,7 @@ public class AccountVerification {
 		do {
 			if(!cardLock) {
 				System.out.println("Enter your PIN: ");
-				if(pin.contentEquals(test)) {
+				if(pin.contentEquals(ba.getPIN())) {
 					System.out.println("Welcome");
 					break;
 				}
