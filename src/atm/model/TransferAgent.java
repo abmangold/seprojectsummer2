@@ -7,14 +7,15 @@ public class TransferAgent implements Runnable, Agent{
 	private Receipt receipt;
 	private BankAccount origAccount;
 	private BankAccount destAccount;
-	private BigDecimal depositAmount;
+	private BigDecimal transferAmount;
 	private BigDecimal transferred;
+	private Exception RunException;
 	 
-	TransferAgent(BankAccount origAccount, BankAccount destAccount, BigDecimal amount) {
+	public TransferAgent(BankAccount origAccount, BankAccount destAccount, BigDecimal amount) {
 		this.origAccount = origAccount;
 		this.destAccount = destAccount;
-		this.depositAmount = amount;
-		this.depositAmount.setScale(2, RoundingMode.HALF_UP);
+		this.transferAmount = amount;
+		this.transferAmount.setScale(2, RoundingMode.HALF_UP);
 		this.transferred = BigDecimal.ZERO;
 		this.transferred.setScale(2, RoundingMode.HALF_UP);
 		this.receipt = new Receipt();	
@@ -39,9 +40,27 @@ public class TransferAgent implements Runnable, Agent{
 		return transferred;
 	}
 
+	public Exception getRunException() {
+		return RunException;
+	}
+	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub		
+		try {
+			receipt.ProcessEvent(origAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+			origAccount.withdraw(transferAmount);
+			receipt.ProcessEvent(origAccount, TransactionEvent.Transfer_Withdraw, transferAmount);	
+			receipt.ProcessEvent(origAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+			
+			receipt.ProcessEvent(destAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+			destAccount.deposit(transferAmount);
+			transferred = transferred.add(transferAmount);
+			receipt.ProcessEvent(destAccount, TransactionEvent.Transfer_Deposit, transferAmount);
+			receipt.ProcessEvent(destAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+		}
+		catch (InsufficientFundsException ex) {
+			RunException = ex;
+		}
 	}
 
 }

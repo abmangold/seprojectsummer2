@@ -2,14 +2,16 @@ package atm.model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import atm.model.InsufficientFundsException;
 
 public class WithdrawAgent implements Runnable, Agent{
 	private Receipt receipt;
 	private BankAccount bankAccount;
 	private BigDecimal withdrawAmount;
 	private BigDecimal transferred;
+	private Exception RunException;
 	 
-	WithdrawAgent(BankAccount account, BigDecimal amount) {
+	public WithdrawAgent(BankAccount account, BigDecimal amount) {
 		this.bankAccount = account;
 		this.withdrawAmount = amount;
 		this.withdrawAmount.setScale(2, RoundingMode.HALF_UP);
@@ -32,9 +34,22 @@ public class WithdrawAgent implements Runnable, Agent{
 		return transferred;
 	}
 
+	public Exception getRunException() {
+		return RunException;
+	}
+	
 	@Override
 	public void run() {
-			
+		try {
+			receipt.ProcessEvent(bankAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+			bankAccount.withdraw(withdrawAmount);
+			transferred = transferred.add(withdrawAmount);
+			receipt.ProcessEvent(bankAccount, TransactionEvent.Withdraw, transferred);
+			receipt.ProcessEvent(bankAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+		}
+		catch (InsufficientFundsException ex) {
+			RunException = ex;
+		}
 	}
 
 }

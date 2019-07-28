@@ -9,7 +9,7 @@ public class DepositAgent implements Runnable, Agent{
 	private BigDecimal depositAmount;
 	private BigDecimal transferred;
 	 
-	DepositAgent(BankAccount account, BigDecimal amount) {
+	public DepositAgent(BankAccount account, BigDecimal amount) {
 		this.bankAccount = account;
 		this.depositAmount = amount;
 		this.depositAmount.setScale(2, RoundingMode.HALF_UP);
@@ -34,7 +34,11 @@ public class DepositAgent implements Runnable, Agent{
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub		
+		receipt.ProcessEvent(bankAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+		bankAccount.deposit(depositAmount);
+		transferred = transferred.add(depositAmount);
+		receipt.ProcessEvent(bankAccount, TransactionEvent.Deposit, transferred);
+		receipt.ProcessEvent(bankAccount, TransactionEvent.Balance, BigDecimal.ZERO);
 	}
 
 }
