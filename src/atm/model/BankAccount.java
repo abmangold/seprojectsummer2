@@ -52,7 +52,7 @@ public class BankAccount extends AbstractModel{
 		return Balance;
 	}
 
-	public void withdraw(BigDecimal amount) throws Exception {
+	public void withdraw(BigDecimal amount) throws InsufficientFundsException {
 		BigDecimal newBalance = Balance.add(BigDecimal.ZERO);
 		newBalance = newBalance.subtract(amount);
 		if (newBalance.signum() < 0) throw new InsufficientFundsException();
@@ -67,5 +67,11 @@ public class BankAccount extends AbstractModel{
 		// Add Model Event
 		Balance = newBalance;
 		// Notify Changed
-  }
+    }
+	
+	@Override
+	public String toString()
+	{
+		return Name + "-" + ID;
+	}
 }
