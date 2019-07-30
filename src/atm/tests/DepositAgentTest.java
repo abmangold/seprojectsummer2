@@ -9,8 +9,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import atm.controller.DepositAgent;
 import atm.model.BankAccount;
-import atm.model.DepositAgent;
 
 public class DepositAgentTest {
 

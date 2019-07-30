@@ -1,8 +1,12 @@
-package atm.model;
+package atm.controller;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
+import atm.model.BankAccount;
 import atm.model.InsufficientFundsException;
+import atm.model.Receipt;
+import atm.model.TransactionEvent;
 
 public class WithdrawAgent implements Runnable, Agent{
 	private Receipt receipt;

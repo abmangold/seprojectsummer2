@@ -3,7 +3,7 @@ package atm.model;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class BankAccount extends AbstractModel{
+public class BankAccount {
 	private BigDecimal Balance;
 	private String Name;
 	private String Owner;
