@@ -1,3 +1,5 @@
+package atm.gui;
+
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
