@@ -8,42 +8,85 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import atm.model.AccountLockException;
 import atm.model.BankAccount;
 import atm.model.InsufficientFundsException;
 
 public class BankAccountTest {
 	BankAccount ba;
 	@Before
-	public void setUp() throws Exception {
+	public void SetUp() {
 		ba = new BankAccount("Checking", "123456", "12345", "1111", new BigDecimal("200.00"));
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void TearDown() {
 		ba = null;
 	}
 	
 	@Test
-	public void testWithdraw() throws Exception {
-		ba.withdraw(new BigDecimal("110.55"));
-		assertEquals(ba.getBalance().toString(), "89.45");
+	public void AccounWithdrawTest() {
+		try {
+			ba.withdraw(new BigDecimal("110.55"));	
+			assertEquals("89.45", ba.getBalance().toString());
+		}
+		catch(Exception ex) {
+			fail("Should not have thrown Exception!");
+		}
 	}
 	
 	@Test
-	public void testInsufficientFunds() throws Exception {
+	public void AccountDepositTest() {
 		try {
-			ba.withdraw(new BigDecimal("250.00"));
+			ba.deposit(new BigDecimal("150.00"));
+			assertEquals("350.00", ba.getBalance().toString());
+		}
+		catch(Exception ex) {
+			fail("Should not have thrown Exception!");
+		}
+	}
+
+	@Test
+	public void AccountWithdrawAccountLockedTest() {
+		try {
+			ba.setAccountLock(true);
+			ba.withdraw(new BigDecimal("50.00"));
+			fail("Should have thrown AccountLockException");
+		}
+		catch (AccountLockException ex) {
+			// Correct exception thrown
+		}
+		catch(Exception ex) {
+			fail("Unexpected exception thrown!");
+		}
+	}
+		
+	@Test
+	public void AccountDepositAccountLockedTest() {
+		try {
+			ba.setAccountLock(true);
+			ba.deposit(new BigDecimal("150.00"));
+			fail("Should have thrown AccountLockException");
+		}
+		catch (AccountLockException ex) {
+			// Correct exception thrown
+		}
+		catch(Exception ex) {
+			fail("Unexpected exception thrown!");
+		}
+	}
+	
+	@Test
+	public void AccountWithdrawInsufficientFundsTest() {
+		try {
+			ba.withdraw(new BigDecimal("250.00"));	
 			fail("Insufficient funds exception should be thrown");
 		}
 		catch(InsufficientFundsException ex) {
-			assertEquals(ex.getMessage(), "Insufficient Funds!");
+			// Correct exception thrown
 		}
-	}
-	
-	@Test
-	public void testDeposit() {
-		ba.deposit(new BigDecimal("150.00"));
-		assertEquals(ba.getBalance().toString(), "350.00");
-	}
-	
+		catch(Exception ex) {
+			fail("Unexpected exception thrown!");
+		}
+	}	
 }

@@ -9,7 +9,8 @@ public class BankAccount {
 	private String Owner;
 	private String ID;
 	private String PIN;
-	private Object Lock;
+	private boolean AccountLock;
+	private Object SyncLock;
 
 	public BankAccount() {
 		this("", "", "", "", BigDecimal.ZERO);
@@ -26,7 +27,8 @@ public class BankAccount {
 		this.PIN = PIN;
 		this.Balance = balance;	
 		this.Balance.setScale(2, RoundingMode.HALF_UP);
-		this.Lock = new Object();
+		this.SyncLock = new Object();
+		this.setAccountLock(false);
 	}
 	
 	public String getPIN() {
@@ -49,8 +51,11 @@ public class BankAccount {
 		return Balance;
 	}
 
-	public void withdraw(BigDecimal amount) throws InsufficientFundsException {
-		synchronized(Lock) {			
+	public void withdraw(BigDecimal amount) throws InsufficientFundsException, AccountLockException {
+		synchronized(SyncLock) {
+			if (AccountLock) {
+				throw new AccountLockException();
+			}
 			BigDecimal newBalance = Balance.add(BigDecimal.ZERO);
 			newBalance = newBalance.subtract(amount);
 			if (newBalance.signum() < 0) throw new InsufficientFundsException();
@@ -58,8 +63,11 @@ public class BankAccount {
 		}
 	}
 
-	public void deposit(BigDecimal amount) {
-		synchronized(Lock) {
+	public void deposit(BigDecimal amount) throws AccountLockException {
+		synchronized(SyncLock) {
+			if (AccountLock) {
+				throw new AccountLockException();
+			}
 			BigDecimal newBalance = Balance.add(BigDecimal.ZERO);
 			newBalance = newBalance.add(amount);
 			Balance = newBalance;
@@ -70,5 +78,15 @@ public class BankAccount {
 	public String toString()
 	{
 		return Name + "-" + ID;
+	}
+
+	public boolean isAccountLock() {
+			return AccountLock;
+	}
+
+	public void setAccountLock(boolean accountLock) {
+		synchronized(SyncLock) {
+			AccountLock = accountLock;
+		}
 	}
 }

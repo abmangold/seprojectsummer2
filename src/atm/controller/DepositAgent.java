@@ -12,6 +12,7 @@ public class DepositAgent implements Runnable, Agent{
 	private BankAccount bankAccount;
 	private BigDecimal depositAmount;
 	private BigDecimal transferred;
+	private Exception RunException;
 	 
 	public DepositAgent(BankAccount account, BigDecimal amount) {
 		this.bankAccount = account;
@@ -36,13 +37,22 @@ public class DepositAgent implements Runnable, Agent{
 		return transferred;
 	}
 
+	public Exception getRunException() {
+		return RunException;
+	}
+	
 	@Override
 	public void run() {
-		receipt.ProcessEvent(bankAccount, TransactionEvent.Balance, BigDecimal.ZERO);
-		bankAccount.deposit(depositAmount);
-		transferred = transferred.add(depositAmount);
-		receipt.ProcessEvent(bankAccount, TransactionEvent.Deposit, transferred);
-		receipt.ProcessEvent(bankAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+		try {
+			receipt.ProcessEvent(bankAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+			bankAccount.deposit(depositAmount);
+			transferred = transferred.add(depositAmount);
+			receipt.ProcessEvent(bankAccount, TransactionEvent.Deposit, transferred);
+			receipt.ProcessEvent(bankAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+		}
+		catch (Exception ex) {
+			RunException = ex;
+		}
 	}
 
 }

@@ -40,6 +40,6 @@ public class DepositAgentTest {
 		da.run();
 
 		assertEquals(depositAmount, da.getTransferred());
-		assertEquals(ba.getBalance().toString(), "232.75");
+		assertEquals("232.75", ba.getBalance().toString());
 	}
 }

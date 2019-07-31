@@ -40,7 +40,7 @@ public class WithdrawAgentTest {
 		wa.run();
 
 		assertEquals(withdrawAmount, wa.getTransferred());
-		assertEquals(ba.getBalance().toString(), "174.45");
+		assertEquals("174.45", ba.getBalance().toString());
 	}
 	
 	@Test
@@ -54,7 +54,7 @@ public class WithdrawAgentTest {
 
 		assertEquals(BigDecimal.ZERO, wa.getTransferred());
 		assertNotNull(wa.getRunException());
-		assertEquals(wa.getRunException().getMessage(), "Insufficient Funds!");
-		assertEquals(ba.getBalance().toString(), "200.00");
+		assertEquals("Insufficient Funds!", wa.getRunException().getMessage());
+		assertEquals("200.00", ba.getBalance().toString());
 	}
 }
