@@ -9,15 +9,12 @@ public class BankAccount {
 	private String Owner;
 	private String ID;
 	private String PIN;
+	private boolean AccountLock;
+	private Object SyncLock;
 
 	public BankAccount() {
-		this.Name = "";
-		this.Owner = "";
-		this.ID = "";
-		this.PIN = "";
-		this.Balance = BigDecimal.ZERO;	
-		this.Balance.setScale(2, RoundingMode.HALF_UP);
-}
+		this("", "", "", "", BigDecimal.ZERO);
+	}
 
 	public BankAccount(String name,
 					   String owner,
@@ -30,8 +27,10 @@ public class BankAccount {
 		this.PIN = PIN;
 		this.Balance = balance;	
 		this.Balance.setScale(2, RoundingMode.HALF_UP);
+		this.SyncLock = new Object();
+		this.setAccountLock(false);
 	}
-
+	
 	public String getPIN() {
 		return PIN;
 	}
@@ -52,26 +51,42 @@ public class BankAccount {
 		return Balance;
 	}
 
-	public void withdraw(BigDecimal amount) throws InsufficientFundsException {
-		BigDecimal newBalance = Balance.add(BigDecimal.ZERO);
-		newBalance = newBalance.subtract(amount);
-		if (newBalance.signum() < 0) throw new InsufficientFundsException();
-		// Add Model Event
-		Balance = newBalance;
-		// Notify Changed
+	public void withdraw(BigDecimal amount) throws InsufficientFundsException, AccountLockException {
+		synchronized(SyncLock) {
+			if (AccountLock) {
+				throw new AccountLockException();
+			}
+			BigDecimal newBalance = Balance.add(BigDecimal.ZERO);
+			newBalance = newBalance.subtract(amount);
+			if (newBalance.signum() < 0) throw new InsufficientFundsException();
+			Balance = newBalance;
+		}
 	}
 
-	public void deposit(BigDecimal amount) {
-		BigDecimal newBalance = Balance.add(BigDecimal.ZERO);
-		newBalance = newBalance.add(amount);
-		// Add Model Event
-		Balance = newBalance;
-		// Notify Changed
+	public void deposit(BigDecimal amount) throws AccountLockException {
+		synchronized(SyncLock) {
+			if (AccountLock) {
+				throw new AccountLockException();
+			}
+			BigDecimal newBalance = Balance.add(BigDecimal.ZERO);
+			newBalance = newBalance.add(amount);
+			Balance = newBalance;
+		}
     }
 	
 	@Override
 	public String toString()
 	{
 		return Name + "-" + ID;
+	}
+
+	public boolean isAccountLock() {
+			return AccountLock;
+	}
+
+	public void setAccountLock(boolean accountLock) {
+		synchronized(SyncLock) {
+			AccountLock = accountLock;
+		}
 	}
 }

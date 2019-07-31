@@ -43,8 +43,8 @@ public class TransferAgentTest {
 		ta.run();
 
 		assertEquals(transferAmount, ta.getTransferred());
-		assertEquals(origAccount.getBalance().toString(), "174.45");
-		assertEquals(destAccount.getBalance().toString(), "75.55");
+		assertEquals("174.45", origAccount.getBalance().toString());
+		assertEquals("75.55", destAccount.getBalance().toString());
 	}
 	
 	@Test
@@ -58,8 +58,8 @@ public class TransferAgentTest {
 
 		assertEquals(BigDecimal.ZERO, ta.getTransferred());
 		assertNotNull(ta.getRunException());
-		assertEquals(ta.getRunException().getMessage(), "Insufficient Funds!");
-		assertEquals(origAccount.getBalance().toString(), "200.00");
-		assertEquals(destAccount.getBalance().toString(), "50.00");
+		assertEquals("Insufficient Funds!", ta.getRunException().getMessage());
+		assertEquals("200.00", origAccount.getBalance().toString());
+		assertEquals("50.00", destAccount.getBalance().toString());
 	}
 }

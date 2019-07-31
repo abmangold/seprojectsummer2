@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import atm.model.BankAccount;
-import atm.model.InsufficientFundsException;
 import atm.model.Receipt;
 import atm.model.TransactionEvent;
 
@@ -63,7 +62,7 @@ public class TransferAgent implements Runnable, Agent{
 			receipt.ProcessEvent(destAccount, TransactionEvent.Transfer_Deposit, transferAmount);
 			receipt.ProcessEvent(destAccount, TransactionEvent.Balance, BigDecimal.ZERO);
 		}
-		catch (InsufficientFundsException ex) {
+		catch (Exception ex) {
 			RunException = ex;
 		}
 	}
