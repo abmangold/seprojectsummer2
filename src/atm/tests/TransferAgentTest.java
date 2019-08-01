@@ -21,8 +21,8 @@ public class TransferAgentTest {
 	@Before
 	public void Setup()
 	{
-		origAccount = new BankAccount("Checking", "123456", "1234", "1111", new BigDecimal("200.00"));
-		destAccount = new BankAccount("Savings", "987654", "9876", "2222", new BigDecimal("50.00"));
+		origAccount = new BankAccount("Checking", "1234", "1111", new BigDecimal("200.00"));
+		destAccount = new BankAccount("Savings", "9876", "2222", new BigDecimal("50.00"));
 	}
 	
 	@After

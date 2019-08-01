@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import atm.model.BankAccount;
 
 public class PinAuthenticator {
-	BankAccount ba = new BankAccount("Checking", "123456", "1234", "1111", new BigDecimal("200.00")); // Only here for testing purposes, otherwise the object would have existing parameters already.
+	BankAccount ba = new BankAccount("Checking", "1234", "1111", new BigDecimal("200.00")); // Only here for testing purposes, otherwise the object would have existing parameters already.
 	private String pin;
 	//private String test = ba.getPIN();
 	private int attempts = 3;
