@@ -20,7 +20,7 @@ public class WithdrawAgentTest {
 	@Before
 	public void Setup()
 	{
-		ba = new BankAccount("Checking", "123456", "1234", "1111", new BigDecimal("200.00"));
+		ba = new BankAccount("Checking", "1234", "1111", new BigDecimal("200.00"));
 	}
 	
 	@After

@@ -16,7 +16,7 @@ public class BankAccountTest {
 	BankAccount ba;
 	@Before
 	public void SetUp() {
-		ba = new BankAccount("Checking", "123456", "12345", "1111", new BigDecimal("200.00"));
+		ba = new BankAccount("Checking", "12345", "1111", new BigDecimal("200.00"));
 	}
 
 	@After

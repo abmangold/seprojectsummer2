@@ -28,10 +28,8 @@ public class ThreadSafeAgentTests {
 		return new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Random random = new Random();
 				for (int i=0; i < numTransactions; i++) {
 					try {
-					Thread.sleep(random.nextInt(2000));
 					Thread agentThread = new Thread(agent);
 					agentThread.start();
 					agentThread.join();
@@ -46,8 +44,8 @@ public class ThreadSafeAgentTests {
 	@Before
 	public void Setup()
 	{
-		account1 = new BankAccount("Checking", "123456", "1234", "1111", new BigDecimal("200.00"));
-		account2 = new BankAccount("Savings", "123456", "1235", "2222", new BigDecimal("1000.00"));
+		account1 = new BankAccount("Checking", "1234", "1111", new BigDecimal("200.00"));
+		account2 = new BankAccount("Savings", "1235", "2222", new BigDecimal("1000.00"));
 	}
 	
 	@After
