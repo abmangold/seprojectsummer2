@@ -7,13 +7,22 @@ import atm.model.BankAccount;
 import atm.model.Receipt;
 import atm.model.TransactionEvent;
 
+/**
+ * WithdrawAgent class to perform withdraws on a BankAccount.
+ * @author Chris Carson
+ */
 public class WithdrawAgent implements Runnable, Agent{
 	private Receipt receipt;
 	private BankAccount bankAccount;
 	private BigDecimal withdrawAmount;
 	private BigDecimal transferred;
 	private Exception RunException;
-	 
+	
+	/**
+	 * Default constructor for WithdrawAgent.
+	 * @param account BankAccount to perform withdraw on.
+	 * @param amount BigDecimal amount to withdraw from account.
+	 */
 	public WithdrawAgent(BankAccount account, BigDecimal amount) {
 		this.bankAccount = account;
 		this.withdrawAmount = amount;
@@ -37,6 +46,7 @@ public class WithdrawAgent implements Runnable, Agent{
 		return transferred;
 	}
 
+	@Override
 	public Exception getRunException() {
 		return RunException;
 	}
