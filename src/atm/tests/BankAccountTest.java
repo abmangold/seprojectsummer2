@@ -12,6 +12,10 @@ import atm.model.AccountLockException;
 import atm.model.BankAccount;
 import atm.model.InsufficientFundsException;
 
+/**
+ * Tests to verify BankAccount correctness.
+ * @author Chris Carson
+ */
 public class BankAccountTest {
 	BankAccount ba;
 	@Before

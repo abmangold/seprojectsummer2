@@ -17,6 +17,10 @@ import atm.controller.TransferAgent;
 import atm.controller.WithdrawAgent;
 import atm.model.BankAccount;
 
+/**
+ * Tests to verify thread safety operations for various BankAccount Agents
+ * @author Chris Carson
+ */
 public class ThreadSafeAgentTests {
 	BankAccount account1;
 	BankAccount account2;

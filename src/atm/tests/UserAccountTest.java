@@ -11,6 +11,10 @@ import org.junit.Test;
 import atm.model.BankAccount;
 import atm.model.UserAccount;
 
+/**
+ * Tests to verify UserAccount correctness.
+ * @author Chris Carson
+ */
 public class UserAccountTest {
 
 	private UserAccount ua;

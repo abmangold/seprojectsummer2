@@ -7,6 +7,10 @@ import atm.model.BankAccount;
 import atm.model.Receipt;
 import atm.model.TransactionEvent;
 
+/**
+ * TransferAgent class to perform transfers from one BankAccount to another BankAccount.
+ * @author Chris Carson
+ */
 public class TransferAgent implements Runnable, Agent{
 	private Receipt receipt;
 	private BankAccount origAccount;
@@ -15,6 +19,11 @@ public class TransferAgent implements Runnable, Agent{
 	private BigDecimal transferred;
 	private Exception RunException;
 	 
+	/** Default constructor for TransferAgent
+	 * @param origAccount BankAccount to transfer (withdraw) from.
+	 * @param destAccount BankAccount to transfer (deposit) to.
+	 * @param amount BigDecimal amount to transfer.
+	 */
 	public TransferAgent(BankAccount origAccount, BankAccount destAccount, BigDecimal amount) {
 		this.origAccount = origAccount;
 		this.destAccount = destAccount;
@@ -30,11 +39,17 @@ public class TransferAgent implements Runnable, Agent{
 		return receipt;
 	}
 
+	/** Retrieves the originating BankAccount
+	 * @return BankAccount to transfer from.
+	 */
 	@Override
 	public BankAccount getBankAccount() {
 		return origAccount;
 	}
 	
+	/** Retrieves the destination BankAccount
+	 * @return BankAccount to transfer to.
+	 */
 	public BankAccount getDestBankAccount() {
 		return destAccount;
 	}
@@ -44,6 +59,7 @@ public class TransferAgent implements Runnable, Agent{
 		return transferred;
 	}
 
+	@Override
 	public Exception getRunException() {
 		return RunException;
 	}

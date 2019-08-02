@@ -10,20 +10,14 @@ public class Bank {
 	
 	//Gets users account when signing in
 	public UserAccount getUserAccount(String ID) {
-		
-		//This user account returned when found
-		UserAccount foundUser = new UserAccount();
-		
-		return(foundUser);
+			
+		return(null);
 	}
 	
 	//Gets users different accounts within the bank
 	public BankAccount getUserBankAccounts(String ID) {
 		
-		//This bank account returned when found with the user
-		BankAccount foundBankAccount = new BankAccount();
-		
-		return(foundBankAccount);
+		return(null);
 	}
 	
 	//Adding users to UserAccounts List
