@@ -12,6 +12,10 @@ import org.junit.Test;
 import atm.controller.TransferAgent;
 import atm.model.BankAccount;
 
+/**
+ * Tests to verify TransferAgent correctness.
+ * @author Chris Carson
+ */
 public class TransferAgentTest {
 
 	BankAccount origAccount;

@@ -12,6 +12,10 @@ import org.junit.Test;
 import atm.controller.WithdrawAgent;
 import atm.model.BankAccount;
 
+/**
+ * Tests to verify WithdrawAgent correctness.
+ * @author Chris Carson
+ */
 public class WithdrawAgentTest {
 
 	BankAccount ba;

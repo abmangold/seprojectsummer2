@@ -12,6 +12,10 @@ import org.junit.Test;
 import atm.controller.DepositAgent;
 import atm.model.BankAccount;
 
+/**
+ * Tests to verify DepositAgent correctness.
+ * @author Chris Carson
+ */
 public class DepositAgentTest {
 
 	BankAccount ba;
