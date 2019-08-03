@@ -120,7 +120,7 @@ public class BankAccount {
 				throw new AccountLockException();
 			}
 			try {
-				Thread.sleep(new Random().nextInt(250)); // simulate database connection
+				Thread.sleep(new Random().nextInt(25)); // simulate database connection
 			} catch (InterruptedException e) {
 			}
 			BigDecimal newBalance = Balance.add(BigDecimal.ZERO);
@@ -141,7 +141,7 @@ public class BankAccount {
 				throw new AccountLockException();
 			}
 			try {
-				Thread.sleep(new Random().nextInt(250)); // simulate database connection
+				Thread.sleep(new Random().nextInt(25)); // simulate database connection
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
