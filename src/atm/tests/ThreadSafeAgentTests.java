@@ -32,14 +32,22 @@ public class ThreadSafeAgentTests {
 		return new Thread(new Runnable() {
 			@Override
 			public void run() {
+				ArrayList<Thread> threads = new ArrayList<Thread>();
+				boolean interruptedThread = false;
 				for (int i=0; i < numTransactions; i++) {
+					threads.add(new Thread(agent));
+					threads.get(i).start();				
+				}
+				for(int i=0; i <numTransactions; i++)
+				{
 					try {
-					Thread agentThread = new Thread(agent);
-					agentThread.start();
-					agentThread.join();
+						threads.get(i).join();
 					} catch (InterruptedException e) {
-						fail("Should not have interrupted.");
+						interruptedThread = true;
 					}
+				}
+				if (interruptedThread) {
+					fail("Thread should not have interrupted!");
 				}
 			}
 		});
@@ -147,72 +155,65 @@ public class ThreadSafeAgentTests {
 	@Test
 	public void ThreadSafeTransferTest()
 	{
-		BigDecimal transferAmount = new BigDecimal("10.00");
+		BigDecimal transferAmount = new BigDecimal("0.10");
 		transferAmount.setScale(2,RoundingMode.HALF_UP);
 		ta = new TransferAgent(account1, account2, transferAmount);
 
-		Thread transferAgentsThread1 = SpawnAgentThreads(3,ta);
-		Thread transferAgentsThread2 = SpawnAgentThreads(2,ta);
+		Thread transferAgentsThread = SpawnAgentThreads(1000,ta);
+
 		
-		transferAgentsThread1.start();
-		transferAgentsThread2.start();
+		transferAgentsThread.start();
 		
 		try {
-			transferAgentsThread1.join();
-			transferAgentsThread2.join();
+			transferAgentsThread.join();
 		} catch (InterruptedException e) {
 			fail("Should not have interrupted.");
 		}
 		
-		assertEquals("150.00", account1.getBalance().toString());
-		assertEquals("1050.00", account2.getBalance().toString());
+		assertEquals("100.00", account1.getBalance().toString());
+		assertEquals("1100.00", account2.getBalance().toString());
 	}
 	
 	@Test
 	public void ThreadSafeDepositTest()
 	{
-		BigDecimal depositAmount = new BigDecimal("20.00");
+		BigDecimal depositAmount = new BigDecimal("0.20");
 		depositAmount.setScale(2,RoundingMode.HALF_UP);
 		da = new DepositAgent(account1, depositAmount);
 
-		Thread depositAgentsThread1 = SpawnAgentThreads(3,da);
-		Thread depositAgentsThread2 = SpawnAgentThreads(2,da);
+		Thread depositAgentsThread= SpawnAgentThreads(1000,da);
+
 		
-		depositAgentsThread1.start();
-		depositAgentsThread2.start();
+		depositAgentsThread.start();
 		
 		try {
-			depositAgentsThread1.join();
-			depositAgentsThread2.join();
+			depositAgentsThread.join();
 		} catch (InterruptedException e) {
 			fail("Should not have interrupted.");
 		}
 		
 		System.out.print(da.getTransferred());
 
-		assertEquals("300.00", account1.getBalance().toString());
+		assertEquals("400.00", account1.getBalance().toString());
 	}
 	
 	@Test
 	public void ThreadSafeWithdrawTest()
 	{
-		BigDecimal withdrawAmount = new BigDecimal("15.00");
+		BigDecimal withdrawAmount = new BigDecimal("0.15");
 		withdrawAmount.setScale(2,RoundingMode.HALF_UP);
 		wa = new WithdrawAgent(account1, withdrawAmount);
 
-		Thread withdrawAgentsThread1 = SpawnAgentThreads(3,wa);
-		Thread withdrawAgentsThread2 = SpawnAgentThreads(2,wa);
+		Thread withdrawAgentsThread = SpawnAgentThreads(1000,wa);
 		
-		withdrawAgentsThread1.start();
-		withdrawAgentsThread2.start();
+		withdrawAgentsThread.start();
 		
 		try {
-			withdrawAgentsThread1.join();
-			withdrawAgentsThread2.join();
+			withdrawAgentsThread.join();
 		} catch (InterruptedException e) {
 			fail("Should not have interrupted.");
 		}
 		
-		assertEquals("125.00", account1.getBalance().toString());
+		assertEquals("50.00", account1.getBalance().toString());
 	}
 }
