@@ -19,9 +19,9 @@ public class UserAccount {
 	 * @param id Identifier for the UserAccount.
 	 * @param name Name of the UserAccount.
 	 */
-	public UserAccount(String id, String name) {
-		this.ID = id;
+	public UserAccount(String name, String id) {
 		this.Name = name;
+		this.ID = id;
 		this.BankAccounts = new ArrayList<BankAccount>();
 	}
 
