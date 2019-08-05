@@ -3,7 +3,9 @@ package atm.controller;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import atm.model.AccountLockException;
 import atm.model.BankAccount;
+import atm.model.InsufficientFundsException;
 import atm.model.Receipt;
 
 /**
@@ -17,6 +19,7 @@ public class TransferAgent implements Runnable, Agent{
 	private BigDecimal transferAmount;
 	private BigDecimal transferred;
 	private Exception RunException;
+	private Exception RunException2;
 	 
 	/** Default constructor for TransferAgent
 	 * @param origAccount BankAccount to transfer (withdraw) from.
@@ -63,16 +66,35 @@ public class TransferAgent implements Runnable, Agent{
 		return RunException;
 	}
 	
+	/**
+	 * Retrieves the Exception, if any, that were thrown on the destination account.
+	 * @return RunException Exception thrown for destination account
+	 */
+	public Exception getRunException2() {
+		return RunException2;
+	}
+	
 	@Override
 	public void run() {
 		try {
-
-			origAccount.withdraw(transferAmount);		
-			destAccount.deposit(transferAmount);
-			transferred = transferred.add(transferAmount);
-			receipt.addTransfer(origAccount, destAccount, transferred);		
+			origAccount.withdraw(transferAmount);
+			try {
+				destAccount.deposit(transferAmount);
+				transferred = transferred.add(transferAmount);
+				receipt.addTransfer(origAccount, destAccount, transferred);
+			}
+			catch (AccountLockException ex) {
+				origAccount.deposit(transferAmount); // undo transfer since destination account is locked.
+				receipt.addAccountLockMessage(destAccount);
+				RunException2 = ex;
+			}				
 		}
-		catch (Exception ex) {
+		catch (AccountLockException ex) {
+			receipt.addAccountLockMessage(origAccount);
+			RunException = ex;
+		}
+		catch (InsufficientFundsException ex) {
+			receipt.addInsuffucientFundsMessage(origAccount, transferAmount);
 			RunException = ex;
 		}
 	}
