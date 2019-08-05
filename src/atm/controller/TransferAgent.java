@@ -5,7 +5,6 @@ import java.math.RoundingMode;
 
 import atm.model.BankAccount;
 import atm.model.Receipt;
-import atm.model.TransactionEvent;
 
 /**
  * TransferAgent class to perform transfers from one BankAccount to another BankAccount.
@@ -67,16 +66,11 @@ public class TransferAgent implements Runnable, Agent{
 	@Override
 	public void run() {
 		try {
-			receipt.ProcessEvent(origAccount, TransactionEvent.Balance, BigDecimal.ZERO);
-			origAccount.withdraw(transferAmount);
-			receipt.ProcessEvent(origAccount, TransactionEvent.Transfer_Withdraw, transferAmount);	
-			receipt.ProcessEvent(origAccount, TransactionEvent.Balance, BigDecimal.ZERO);
-			
-			receipt.ProcessEvent(destAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+
+			origAccount.withdraw(transferAmount);		
 			destAccount.deposit(transferAmount);
 			transferred = transferred.add(transferAmount);
-			receipt.ProcessEvent(destAccount, TransactionEvent.Transfer_Deposit, transferAmount);
-			receipt.ProcessEvent(destAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+			receipt.addTransfer(origAccount, destAccount, transferred);		
 		}
 		catch (Exception ex) {
 			RunException = ex;

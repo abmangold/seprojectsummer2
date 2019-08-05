@@ -5,7 +5,6 @@ import java.math.RoundingMode;
 
 import atm.model.BankAccount;
 import atm.model.Receipt;
-import atm.model.TransactionEvent;
 
 /**
  * DepositAgent class to perform deposits on a BankAccount.
@@ -56,11 +55,10 @@ public class DepositAgent implements Runnable, Agent{
 	@Override
 	public void run() {
 		try {
-			receipt.ProcessEvent(bankAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+
 			bankAccount.deposit(depositAmount);
 			transferred = transferred.add(depositAmount);
-			receipt.ProcessEvent(bankAccount, TransactionEvent.Deposit, transferred);
-			receipt.ProcessEvent(bankAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+			receipt.addDeposit(bankAccount, transferred);
 		}
 		catch (Exception ex) {
 			RunException = ex;

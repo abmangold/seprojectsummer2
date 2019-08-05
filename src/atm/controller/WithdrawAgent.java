@@ -5,7 +5,6 @@ import java.math.RoundingMode;
 
 import atm.model.BankAccount;
 import atm.model.Receipt;
-import atm.model.TransactionEvent;
 
 /**
  * WithdrawAgent class to perform withdraws on a BankAccount.
@@ -54,11 +53,9 @@ public class WithdrawAgent implements Runnable, Agent{
 	@Override
 	public void run() {
 		try {
-			receipt.ProcessEvent(bankAccount, TransactionEvent.Balance, BigDecimal.ZERO);
 			bankAccount.withdraw(withdrawAmount);
 			transferred = transferred.add(withdrawAmount);
-			receipt.ProcessEvent(bankAccount, TransactionEvent.Withdraw, transferred);
-			receipt.ProcessEvent(bankAccount, TransactionEvent.Balance, BigDecimal.ZERO);
+			receipt.addWithdraw(bankAccount, transferred);
 		}
 		catch (Exception ex) {
 			RunException = ex;
