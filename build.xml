@@ -1,7 +1,7 @@
-<project name="ATM">
-	
+<project name="ATM">	
 	<property name="atm.src.dir" location="src" />
 	<property name="atm.build.dir" location="bin" />
+	<property name="atm.output.dir" location="dist" />
 	<property name="results.test.dir" location="results" />
 
 	<path id="build.classpath">
@@ -16,11 +16,29 @@
 	    <pathelement location="${atm.build.dir}"/>
 	</path>
 
-	<target name="compile">
+	<target name="clean">
+		<delete dir="${atm.build.dir}"/>
+		<delete dir="${atm.output.dir}"/>
+		<delete dir="${results.test.dir}"/>
+	</target>
+	
+	<target name="compile" depends="clean">
 	    <mkdir dir="${atm.build.dir}"/>
 	    <javac srcdir="${atm.src.dir}" destdir="${atm.build.dir}" includeantruntime="false">
 	    	<classpath refid="build.classpath"/>
 		</javac>
+	</target>
+	
+	<target name="dist" depends="compile" description="generate the distribution">
+		<buildnumber />
+		<mkdir dir="${atm.output.dir}/lib" />
+
+		<jar destfile="${atm.output.dir}/lib/ATM.jar" basedir="${atm.build.dir}" filesetmanifest="mergewithoutmain">
+			<manifest>
+				<attribute name="Main-Class" value="atm.view.View"/>
+				<attribute name="Class-Path" value="."/>
+			</manifest>
+		</jar>
 	</target>
 	
 	<target name="test" depends="compile">
