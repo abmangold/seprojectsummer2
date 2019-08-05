@@ -154,7 +154,14 @@ public class BankAccount {
 	@Override
 	public String toString()
 	{
-		return Name + "-" + ID;
+		if (ID.length() == 19)	
+		{
+			return Name + " : XXXX-XXXX-XXXX-" + ID.substring(ID.length() - 4);
+		}
+		else
+		{
+			return Name;
+		}
 	}
 
 }
