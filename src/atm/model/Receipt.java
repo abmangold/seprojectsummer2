@@ -17,18 +17,6 @@ public class Receipt {
 	
 	
 	/**
-	 * Default constructor for Receipt class
-	 */
-	public Receipt() {
-		ReceiptLines.add("#######################################################################");
-		ReceiptLines.add("#####################         ATM RECEIPT        ######################");
-		ReceiptLines.add("#######################################################################");
-		ReceiptLines.add("#################    Scrooge McDuck Finacial Inc.    ##################");
-		ReceiptLines.add("#######################################################################");
-		ReceiptLines.add("");
-	}
-	
-	/**
 	 * Adds withdraw line items to the receipt.
 	 * @param ba BankAccount withdrawn from.
 	 * @param amount Amount that was withdrawn.
@@ -118,6 +106,12 @@ public class Receipt {
 	 */
 	public void PrintReceipt()
 	{
+		System.out.println("#######################################################################");
+		System.out.println("#####################         ATM RECEIPT        ######################");
+		System.out.println("#######################################################################");
+		System.out.println("#################    Scrooge McDuck Finacial Inc.    ##################");
+		System.out.println("#######################################################################");
+		System.out.println("");
 		for(String line : ReceiptLines) {
 			System.out.println(line);
 		}
