@@ -2,10 +2,11 @@ package atm.controller;
 
 import java.math.BigDecimal;
 
-import atm.model.AccountLockException;
 import atm.model.BankAccount;
-import atm.model.InsufficientFundsException;
 import atm.model.Receipt;
+import atm.controller.WithdrawAgent;
+import atm.controller.DepositAgent;
+import atm.controller.TransferAgent;
 
 /**
  * Manages account transaction actions and receipts.
@@ -27,18 +28,11 @@ public class TransactionManager {
 		agentThread.start();
 		try {
 			agentThread.join();
-		} catch (InterruptedException e) {
+		} 
+		catch (InterruptedException e) {
 			System.out.println("Withdraw Failed!");
 		}
 
-		if (agent.getRunException() != null) {
-			Exception ex = agent.getRunException();
-			if (ex instanceof InsufficientFundsException) {
-				
-			}
-			if (ex instanceof AccountLockException) {			
-			}
-		}
 		return agent.getReceipt();	
 	}
 	
@@ -59,12 +53,6 @@ public class TransactionManager {
 			System.out.println("Deposit Failed!");
 		}
 
-		if (agent.getRunException() != null) {
-			Exception ex = agent.getRunException();
-			if (ex instanceof AccountLockException) {
-				
-			}
-		}
 		return agent.getReceipt();	
 	}
 	
@@ -87,15 +75,6 @@ public class TransactionManager {
 			System.out.println("Transfer Failed!");
 		}
 
-		if (agent.getRunException() != null) {
-			Exception ex = agent.getRunException();
-			if (ex instanceof InsufficientFundsException) {
-				
-			}
-			if (ex instanceof AccountLockException) {
-				
-			}
-		}
 		return agent.getReceipt();	
 	}
 	

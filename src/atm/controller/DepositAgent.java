@@ -3,6 +3,7 @@ package atm.controller;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import atm.model.AccountLockException;
 import atm.model.BankAccount;
 import atm.model.Receipt;
 
@@ -60,7 +61,8 @@ public class DepositAgent implements Runnable, Agent{
 			transferred = transferred.add(depositAmount);
 			receipt.addDeposit(bankAccount, transferred);
 		}
-		catch (Exception ex) {
+		catch (AccountLockException ex) {
+			receipt.addAccountLockMessage(bankAccount);
 			RunException = ex;
 		}
 	}

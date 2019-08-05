@@ -14,11 +14,15 @@ public class PinAuthenticator {
 		
 	
 	public boolean checkPin(String PINtoValidate) throws AccountLockException {
-			if(PINtoValidate.equals(ba.getPIN())) {
-				return true;
-			}
+		if (ba.isAccountLock()) {
+			throw new AccountLockException();
+		}
+			
+		if(PINtoValidate.equals(ba.getPIN())) {
+			return true;
+		}
 
-			attempts--;
+		attempts--;
 		
 		if(attempts == 0) {
 			ba.setAccountLock(true);

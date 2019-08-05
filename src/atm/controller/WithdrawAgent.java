@@ -3,7 +3,9 @@ package atm.controller;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import atm.model.AccountLockException;
 import atm.model.BankAccount;
+import atm.model.InsufficientFundsException;
 import atm.model.Receipt;
 
 /**
@@ -57,7 +59,12 @@ public class WithdrawAgent implements Runnable, Agent{
 			transferred = transferred.add(withdrawAmount);
 			receipt.addWithdraw(bankAccount, transferred);
 		}
-		catch (Exception ex) {
+		catch (InsufficientFundsException ex) {
+			receipt.addInsuffucientFundsMessage(bankAccount, withdrawAmount);
+			RunException = ex;
+		}
+		catch (AccountLockException ex) {
+			receipt.addAccountLockMessage(bankAccount);
 			RunException = ex;
 		}
 	}
