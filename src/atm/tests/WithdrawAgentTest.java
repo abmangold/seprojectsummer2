@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import atm.controller.WithdrawAgent;
 import atm.model.BankAccount;
+import atm.model.InsufficientFundsException;
 
 /**
  * Tests to verify WithdrawAgent correctness.
@@ -58,7 +59,7 @@ public class WithdrawAgentTest {
 
 		assertEquals(BigDecimal.ZERO, wa.getTransferred());
 		assertNotNull(wa.getRunException());
-		assertEquals("Insufficient Funds!", wa.getRunException().getMessage());
+		assertTrue(wa.getRunException() instanceof InsufficientFundsException);
 		assertEquals("200.00", ba.getBalance().toString());
 	}
 }
