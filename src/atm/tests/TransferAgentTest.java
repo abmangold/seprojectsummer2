@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import atm.controller.TransferAgent;
 import atm.model.BankAccount;
+import atm.model.InsufficientFundsException;
 
 /**
  * Tests to verify TransferAgent correctness.
@@ -62,7 +63,7 @@ public class TransferAgentTest {
 
 		assertEquals(BigDecimal.ZERO, ta.getTransferred());
 		assertNotNull(ta.getRunException());
-		assertEquals("Insufficient Funds!", ta.getRunException().getMessage());
+		assertTrue(ta.getRunException() instanceof InsufficientFundsException);
 		assertEquals("200.00", origAccount.getBalance().toString());
 		assertEquals("50.00", destAccount.getBalance().toString());
 	}

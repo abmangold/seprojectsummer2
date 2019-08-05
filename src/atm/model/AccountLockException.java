@@ -1,7 +1,7 @@
 package atm.model;
 
 public class AccountLockException extends Exception{
-	AccountLockException(){
+	public AccountLockException(){
 		super("Account is Locked!");
 	}
 }

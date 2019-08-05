@@ -10,24 +10,56 @@ public class Bank {
 	
 	//Gets users account when signing in
 	public UserAccount getUserAccount(String ID) {
-			
-		return(null);
+		for (UserAccount ua : UserAccounts)	
+		{
+			if (ua.getID().equals(ID))
+			{
+				return ua;
+			}
+		}
+		return null;
 	}
 	
 	//Gets users different accounts within the bank
-	public BankAccount getUserBankAccounts(String ID) {
+	public ArrayList<BankAccount> getUserBankAccounts(String ID) {
+		UserAccount ua = getUserAccount(ID);
+		if (ua != null)
+		{
+			return ua.GetBankAccounts();
+		}
 		
-		return(null);
+		return new ArrayList<BankAccount>();
+	}
+	
+	public BankAccount getBankAccount(String ID) {
+		for (BankAccount ba : BankAccounts)	
+		{
+			if (ba.getID().equals(ID))
+			{
+				return ba;
+			}
+		}
+		return null;
 	}
 	
 	//Adding users to UserAccounts List
 	public void addUsers(UserAccount newUser) {
-		this.UserAccounts.add(newUser);
+		if (!UserAccounts.contains(newUser))
+		{
+			UserAccounts.add(newUser);
+			for (BankAccount ba : newUser.GetBankAccounts())
+			{
+				addBankAccount(ba);
+			}
+		}
 	}
 	
 	//Adding bank account to BankAccount List
 	public void addBankAccount(BankAccount newAccount) {
-		this.BankAccounts.add(newAccount);
+		if (!BankAccounts.contains(newAccount))
+		{
+			BankAccounts.add(newAccount);
+		}
 	}
 
 }
