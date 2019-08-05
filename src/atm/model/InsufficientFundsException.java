@@ -1,7 +1,7 @@
 package atm.model;
 
 public class InsufficientFundsException extends Exception{
-	InsufficientFundsException(){
+	public InsufficientFundsException(){
 		super("Insufficient Funds!");
 	}
 }
