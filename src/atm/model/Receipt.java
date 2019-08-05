@@ -20,11 +20,11 @@ public class Receipt {
 	 * Default constructor for Receipt class
 	 */
 	public Receipt() {
-		ReceiptLines.add("#########################################");
-		ReceiptLines.add("######         ATM RECEIPT        #######");
-		ReceiptLines.add("#########################################");
-		ReceiptLines.add("######  Scrooge McDuck Bank Inc.  #######");
-		ReceiptLines.add("#########################################");
+		ReceiptLines.add("#######################################################################");
+		ReceiptLines.add("#####################         ATM RECEIPT        ######################");
+		ReceiptLines.add("#######################################################################");
+		ReceiptLines.add("#################    Scrooge McDuck Finacial Inc.    ##################");
+		ReceiptLines.add("#######################################################################");
 		ReceiptLines.add("");
 	}
 	
@@ -34,9 +34,30 @@ public class Receipt {
 	 * @param amount Amount that was withdrawn.
 	 */
 	public void addWithdraw(BankAccount ba, BigDecimal amount) {
-		ReceiptLines.add("Withdraw from " + ba.toString() + "     -$" + amount.toString());
+		ReceiptLines.add("Withdraw from [" + ba.toString() + "]     -$" + amount.toString());
 		ReceiptLines.add("");
 		addBalance(ba);
+	}
+	
+	/**
+	 * Adds insufficient funds line items to the receipt.
+	 * @param ba BankAccount withdrawn from.
+	 * @param amount Amount that was withdrawn.
+	 */
+	public void addInsuffucientFundsMessage(BankAccount ba, BigDecimal amount) {
+		ReceiptLines.add("Withdraw from [" + ba.toString() + "]     -$" + amount.toString());
+		ReceiptLines.add("INSUFFICIENT FUNDS! Withdraw canceled.");
+		ReceiptLines.add("");
+		addBalance(ba);
+	}
+	
+	/**
+	 * Adds account lock line items to the receipt.
+	 * @param ba BankAccount that is locked.
+	 */
+	public void addAccountLockMessage(BankAccount ba) {
+		ReceiptLines.add("[" + ba.toString() + "] is locked no action can be performed.");
+		ReceiptLines.add("");
 	}
 	
 	/**
@@ -45,7 +66,7 @@ public class Receipt {
 	 * @param amount Amount that was deposited.
 	 */
 	public void addDeposit(BankAccount ba, BigDecimal amount) {
-		ReceiptLines.add("Deposit into " + ba.toString() + "     +$" + amount.toString());
+		ReceiptLines.add("Deposit into [" + ba.toString() + "]     +$" + amount.toString());
 		ReceiptLines.add("");
 		addBalance(ba);
 	}
@@ -100,5 +121,10 @@ public class Receipt {
 		for(String line : ReceiptLines) {
 			System.out.println(line);
 		}
+		System.out.println("");
+		System.out.println("#######################################################################");
+		System.out.println("#####################         End Receipt         #####################");
+		System.out.println("#######################################################################");
+		System.out.println("");
 	}
 }
