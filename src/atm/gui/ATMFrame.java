@@ -23,6 +23,8 @@ public class ATMFrame {
 
 	private JFrame frame;
 	private JTextField NumberDisplay;
+	private JTextArea textArea = new JTextArea(8, 50);
+
 
 	/**
 	 * Launch the application.
@@ -49,6 +51,7 @@ public class ATMFrame {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
 		frame = new JFrame();
@@ -223,14 +226,27 @@ public class ATMFrame {
 		DisplayPanel.setBounds(81, 24, 457, 220);
 		frame.getContentPane().add(DisplayPanel);
 		
-		JTextArea textArea = new JTextArea(8, 50);
 		textArea.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		
 		DisplayPanel.add(textArea);
 		
+		String welcomeMessage = "********** Card Selection *********** \n" + 
+								"****   Please\\\"Swipe\\\" a Card    **** \n" + 
+								"************************************* \n" + 
+								"\n" + 
+								"1 - John Smith's Card \n" + 
+								"2 - Jane Doe's Card \n" + 
+								"3 - Foo Bar's Card \n" + 
+								"\n" + 
+								"Enter Card Selection : ";
 		
-		
-		
+		setDisplayScreen(welcomeMessage);
 		
 	}
+	
+	public void setDisplayScreen (String message) {		
+		textArea.setText(message);
+	}
+	
+	
 }
