@@ -1,7 +1,7 @@
-##Github
+## Github
 https://github.com/abmangold/seprojectsummer2
 
-##ATM Project Submission file directory
+## ATM project submission file directory
 
 1. Acceptance test cases    -   ./docs/acceptance/Description.docx
 2. UML Class Digram         -   ./docs/diagrams/ClassDiagram.jpg
