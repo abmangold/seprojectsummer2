@@ -94,7 +94,7 @@ public class TransferAgent implements Runnable, Agent{
 			RunException = ex;
 		}
 		catch (InsufficientFundsException ex) {
-			receipt.addInsuffucientFundsMessage(origAccount, transferAmount);
+			receipt.addInsufficientFundsMessage(origAccount, transferAmount);
 			RunException = ex;
 		}
 	}

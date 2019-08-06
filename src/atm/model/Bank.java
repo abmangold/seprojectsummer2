@@ -61,5 +61,13 @@ public class Bank {
 			BankAccounts.add(newAccount);
 		}
 	}
+	
+	public ArrayList<BankAccount> getBankAccounts() {
+		return BankAccounts;
+	}
+	
+	public ArrayList<UserAccount> getUserAccounts() {
+		return UserAccounts;
+	}
 
 }
