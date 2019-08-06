@@ -60,7 +60,7 @@ public class WithdrawAgent implements Runnable, Agent{
 			receipt.addWithdraw(bankAccount, transferred);
 		}
 		catch (InsufficientFundsException ex) {
-			receipt.addInsuffucientFundsMessage(bankAccount, withdrawAmount);
+			receipt.addInsufficientFundsMessage(bankAccount, withdrawAmount);
 			RunException = ex;
 		}
 		catch (AccountLockException ex) {

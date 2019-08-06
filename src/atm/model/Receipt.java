@@ -14,8 +14,7 @@ import java.util.ArrayList;
 public class Receipt {
 
 	private ArrayList<String> ReceiptLines = new ArrayList<String>();
-	
-	
+		
 	/**
 	 * Adds withdraw line items to the receipt.
 	 * @param ba BankAccount withdrawn from.
@@ -32,7 +31,7 @@ public class Receipt {
 	 * @param ba BankAccount withdrawn from.
 	 * @param amount Amount that was withdrawn.
 	 */
-	public void addInsuffucientFundsMessage(BankAccount ba, BigDecimal amount) {
+	public void addInsufficientFundsMessage(BankAccount ba, BigDecimal amount) {
 		ReceiptLines.add("Withdraw from [" + ba.toString() + "]     -$" + amount.toString());
 		ReceiptLines.add("INSUFFICIENT FUNDS! Withdraw canceled.");
 		ReceiptLines.add("");
@@ -88,7 +87,12 @@ public class Receipt {
 	 */
 	public static Receipt getBalanceReceipt(BankAccount ba) {
 		Receipt rec = new Receipt();
-		rec.addBalance(ba);
+		if (ba.isAccountLock()) {
+			rec.addAccountLockMessage(ba);
+		}
+		else {
+			rec.addBalance(ba);
+		}
 		return rec;
 	}
 
