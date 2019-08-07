@@ -25,6 +25,9 @@ import java.awt.CardLayout;
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JSlider;
+import javax.swing.DropMode;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 
 public class ATMFrame {
@@ -69,6 +72,11 @@ public class ATMFrame {
 		frame.setBounds(100, 100, 625, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		JSlider johnSlider = new JSlider(); 
+		JSlider janeSlider = new JSlider();
+		JSlider fooSlider = new JSlider();
+
+
 		
 		JPanel KeyPad = new JPanel();
 		KeyPad.setBackground(SystemColor.activeCaption);
@@ -240,13 +248,12 @@ public class ATMFrame {
 		
 		JPanel textPanel = new JPanel();
 		DisplayPanel.add(textPanel);
-		textPanel.setLayout(null);
+		textPanel.setLayout(new CardLayout(0, 0));
 		displayText.setFont(new Font("Microsoft Tai Le", Font.BOLD, 10));
 		displayText.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		displayText.setEditable(false);
-		displayText.setBounds(0, 0, 457, 110);
-		textPanel.add(displayText);
+		textPanel.add(displayText, "name_706402450127900");
 		
 		JPanel buttonPanel = new JPanel();
 		DisplayPanel.add(buttonPanel);
@@ -283,19 +290,61 @@ public class ATMFrame {
 		swipeCard.add(txtFooBar);
 		txtFooBar.setColumns(10);
 		
-		JSlider johnSlider = new JSlider();
+		johnSlider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				
+				if (janeSlider.isEnabled() && fooSlider.isEnabled() == true) {
+					janeSlider.enable(false);
+					fooSlider.enable(false);
+				}
+				else
+				{
+					janeSlider.enable(true);
+					fooSlider.enable(true);
+				}
+				
+			}
+		});
 		johnSlider.setValue(0);
 		johnSlider.setMaximum(1);
 		johnSlider.setBounds(10, 46, 96, 22);
 		swipeCard.add(johnSlider);
 		
-		JSlider janeSlider = new JSlider();
+		janeSlider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				
+				if (johnSlider.isEnabled() && fooSlider.isEnabled() == true) {
+					johnSlider.enable(false);
+					fooSlider.enable(false);
+				}
+				else
+				{
+					johnSlider.enable(true);
+					fooSlider.enable(true);
+				}
+				
+			}
+		});
 		janeSlider.setValue(0);
 		janeSlider.setMaximum(1);
 		janeSlider.setBounds(182, 46, 96, 22);
 		swipeCard.add(janeSlider);
 		
-		JSlider fooSlider = new JSlider();
+		fooSlider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				
+				if (janeSlider.isEnabled() && johnSlider.isEnabled() == true) {
+					janeSlider.enable(false);
+					johnSlider.enable(false);
+				}
+				else
+				{
+					janeSlider.enable(true);
+					johnSlider.enable(true);
+				}
+				
+			}
+		});
 		fooSlider.setValue(0);
 		fooSlider.setMaximum(1);
 		fooSlider.setBounds(351, 46, 96, 22);
@@ -309,14 +358,18 @@ public class ATMFrame {
 		btnEnter.setBounds(380, 281, 158, 43);
 		frame.getContentPane().add(btnEnter);
 		
-		String welcomeMessage =  "Card Selection \n" + 
-								 "Please Swipe a Card \n";
-		
-		updateText(welcomeMessage);
+		cardSelection();
 		
 	}
 	
 	public void updateText(String message) {
-		displayText.setText("Card Selection - Please Swipe a Card \r\n");
+		displayText.setText(message);
+	}
+	
+	public void cardSelection() {
+		String welcomeMessage =  "Card Selection \n" + 
+				 "Please Swipe a Card \n";
+
+		updateText(welcomeMessage);
 	}
 }
