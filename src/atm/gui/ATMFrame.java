@@ -17,14 +17,24 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.Color;
+import javax.swing.JLayeredPane;
+import javax.swing.JLabel;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+import java.awt.CardLayout;
+import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
+import javax.swing.JSlider;
 
 
 public class ATMFrame {
 
 	private JFrame frame;
 	private JTextField NumberDisplay;
-	private JTextArea textArea = new JTextArea(8, 50);
-
+	private JTextField displayText = new JTextField();
+	private JTextField txtJohnSmith;
+	private JTextField txtJaneDoe;
+	private JTextField txtFooBar;
 
 	/**
 	 * Launch the application.
@@ -177,6 +187,9 @@ public class ATMFrame {
 		KeyPad.add(clearButton);
 		
 		NumberDisplay = new JTextField();
+		NumberDisplay.setHorizontalAlignment(SwingConstants.CENTER);
+		NumberDisplay.setBackground(SystemColor.activeCaption);
+		NumberDisplay.setEditable(false);
 		NumberDisplay.setBounds(85, 281, 285, 43);
 		frame.getContentPane().add(NumberDisplay);
 		NumberDisplay.setColumns(10);
@@ -221,32 +234,89 @@ public class ATMFrame {
 		
 		JPanel DisplayPanel = new JPanel();
 		DisplayPanel.setBackground(SystemColor.activeCaption);
-		FlowLayout fl_DisplayPanel = (FlowLayout) DisplayPanel.getLayout();
-		fl_DisplayPanel.setAlignment(FlowLayout.LEFT);
 		DisplayPanel.setBounds(81, 24, 457, 220);
 		frame.getContentPane().add(DisplayPanel);
+		DisplayPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		textArea.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		JPanel textPanel = new JPanel();
+		DisplayPanel.add(textPanel);
+		textPanel.setLayout(null);
+		displayText.setFont(new Font("Microsoft Tai Le", Font.BOLD, 10));
+		displayText.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		DisplayPanel.add(textArea);
+		displayText.setEditable(false);
+		displayText.setBounds(0, 0, 457, 110);
+		textPanel.add(displayText);
 		
-		String welcomeMessage = "********** Card Selection *********** \n" + 
-								"****   Please\\\"Swipe\\\" a Card    **** \n" + 
-								"************************************* \n" + 
-								"\n" + 
-								"1 - John Smith's Card \n" + 
-								"2 - Jane Doe's Card \n" + 
-								"3 - Foo Bar's Card \n" + 
-								"\n" + 
-								"Enter Card Selection : ";
+		JPanel buttonPanel = new JPanel();
+		DisplayPanel.add(buttonPanel);
+		buttonPanel.setLayout(new CardLayout(0, 0));
 		
-		setDisplayScreen(welcomeMessage);
+		JPanel swipeCard = new JPanel();
+		buttonPanel.add(swipeCard, "name_700066174275400");
+		swipeCard.setLayout(null);
+		
+		txtJohnSmith = new JTextField();
+		txtJohnSmith.setEditable(false);
+		txtJohnSmith.setBackground(Color.LIGHT_GRAY);
+		txtJohnSmith.setHorizontalAlignment(SwingConstants.CENTER);
+		txtJohnSmith.setText("John Smith");
+		txtJohnSmith.setBounds(10, 0, 96, 19);
+		swipeCard.add(txtJohnSmith);
+		txtJohnSmith.setColumns(10);
+		
+		txtJaneDoe = new JTextField();
+		txtJaneDoe.setEditable(false);
+		txtJaneDoe.setHorizontalAlignment(SwingConstants.CENTER);
+		txtJaneDoe.setBackground(Color.LIGHT_GRAY);
+		txtJaneDoe.setText("Jane Doe");
+		txtJaneDoe.setBounds(182, 0, 96, 19);
+		swipeCard.add(txtJaneDoe);
+		txtJaneDoe.setColumns(10);
+		
+		txtFooBar = new JTextField();
+		txtFooBar.setEditable(false);
+		txtFooBar.setHorizontalAlignment(SwingConstants.CENTER);
+		txtFooBar.setBackground(Color.LIGHT_GRAY);
+		txtFooBar.setText("Foo Bar");
+		txtFooBar.setBounds(351, 0, 96, 19);
+		swipeCard.add(txtFooBar);
+		txtFooBar.setColumns(10);
+		
+		JSlider johnSlider = new JSlider();
+		johnSlider.setValue(0);
+		johnSlider.setMaximum(1);
+		johnSlider.setBounds(10, 46, 96, 22);
+		swipeCard.add(johnSlider);
+		
+		JSlider janeSlider = new JSlider();
+		janeSlider.setValue(0);
+		janeSlider.setMaximum(1);
+		janeSlider.setBounds(182, 46, 96, 22);
+		swipeCard.add(janeSlider);
+		
+		JSlider fooSlider = new JSlider();
+		fooSlider.setValue(0);
+		fooSlider.setMaximum(1);
+		fooSlider.setBounds(351, 46, 96, 22);
+		swipeCard.add(fooSlider);
+		
+		JLabel lblNewLabel = new JLabel("Scrooge McDuck Finacial Inc.");
+		lblNewLabel.setBounds(0, 0, 251, 14);
+		frame.getContentPane().add(lblNewLabel);
+		
+		JButton btnEnter = new JButton("Enter");
+		btnEnter.setBounds(380, 281, 158, 43);
+		frame.getContentPane().add(btnEnter);
+		
+		String welcomeMessage =  "Card Selection \n" + 
+								 "Please Swipe a Card \n";
+		
+		updateText(welcomeMessage);
 		
 	}
 	
-	public void setDisplayScreen (String message) {		
-		textArea.setText(message);
+	public void updateText(String message) {
+		displayText.setText("Card Selection - Please Swipe a Card \r\n");
 	}
-	
-	
 }
