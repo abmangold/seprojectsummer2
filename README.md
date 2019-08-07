@@ -3,7 +3,7 @@ https://github.com/abmangold/seprojectsummer2
 
 ## ATM project submission file directory
 
-1. Acceptance test cases    -   ./docs/acceptance/Description.docx
+1. Acceptance test cases    -   ./docs/acceptance/Acceptance.docx
 2. UML Class Digram         -   ./docs/diagrams/ClassDiagram.jpg
 3. State Chart              -   ./docs/diagrams/StateChart.jpeg
 4. Textual Descriptions     -   ./docs/descriptions/*
